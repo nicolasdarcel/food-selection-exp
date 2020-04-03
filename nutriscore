@@ -1,10 +1,9 @@
 
 PennController.ResetPrefix(null) // Shorten command names (keep this line here)
 
-// Show the 'intro' trial first, then all the 'experiment' trials in a random order
 // then send the results and finally show the trial labeled 'bye'
 
-Sequence( "intro", "test2", randomize("experiment") , SendResults() , "bye" )
+Sequence( "intro", randomize("experiment") , SendResults() , "aurevoir" )
 
 
 // What is in Header happens at the beginning of every single trial
@@ -27,7 +26,7 @@ newTrial( "intro" ,
         .size( 150 , 200 )      // Resize the image to 150x200px
         .print()
     ,
-    newText("<p>bienvenue.</p><p>comment vous appelez vous</p>")
+    newText("<p>bienvenue.</p><p>comment vous appelez vous ?</p>")
         .print()
     ,
     newTextInput()
@@ -97,9 +96,7 @@ newSelector()
 
 )
 
-
-// Spaces and linebreaks don't matter to the script: we've only been using them for the sake of readability
-newTrial( "A+" ,
+newTrial( "aurevoir" ,
     newText("merci pour votre participation!").print(),
     newButton().wait()  // Wait for a click on a non-displayed button = wait here forever
 )
