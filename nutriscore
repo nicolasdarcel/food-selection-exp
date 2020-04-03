@@ -1,9 +1,10 @@
 
 PennController.ResetPrefix(null) // Shorten command names (keep this line here)
-
+// test1
+// Show the 'intro' trial first, then all the 'experiment' trials in a random order
 // then send the results and finally show the trial labeled 'bye'
 
-Sequence( "intro", randomize("experiment") , SendResults() , "aurevoir" )
+Sequence( "intro", "test2", randomize("experiment") , SendResults() , "bye" )
 
 
 // What is in Header happens at the beginning of every single trial
@@ -26,7 +27,7 @@ newTrial( "intro" ,
         .size( 150 , 200 )      // Resize the image to 150x200px
         .print()
     ,
-    newText("<p>bienvenue.</p><p>comment vous appelez vous ?</p>")
+    newText("<p>bienvenue.</p><p>comment vous appelez vous</p>")
         .print()
     ,
     newTextInput()
@@ -63,7 +64,13 @@ newText("qu'est ce qu'on mange a midi?")
     .size(35,19)
     ,
 newCanvas(450,400)
-    .add( 0 , 20 , getImage("nutA"))
+    .add( 0 , 20 ,  newImage("Nutri-score-A.png") .size(35,19))
+    .add( 0 , 50 , newImage("Nutri-score-A.png") .size(35,19))
+    .add( 165 , 50 , newImage("Nutri-score-A.png") .size(35,19))
+    .add( 165 , 20 , newImage("Nutri-score-A.png") .size(35,19))
+    .add( 315 , 50 , newImage("Nutri-score-A.png") .size(35,19))
+    .add( 315 , 20 , newImage("Nutri-score-A.png") .size(35,19))
+
     .add( 35 , 20 , getText("starter1") )
     .add( 35 , 50 , getText("starter2") )
     .add( 200 , 20 , getText("main1") )
@@ -96,7 +103,11 @@ newSelector()
 
 )
 
-newTrial( "aurevoir" ,
+
+
+
+// Spaces and linebreaks don't matter to the script: we've only been using them for the sake of readability
+newTrial( "A+" ,
     newText("merci pour votre participation!").print(),
     newButton().wait()  // Wait for a click on a non-displayed button = wait here forever
 )
