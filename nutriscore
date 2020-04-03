@@ -1,0 +1,107 @@
+
+PennController.ResetPrefix(null) // Shorten command names (keep this line here)
+
+// Show the 'intro' trial first, then all the 'experiment' trials in a random order
+// then send the results and finally show the trial labeled 'bye'
+
+Sequence( "intro", "test2", randomize("experiment") , SendResults() , "bye" )
+
+
+// What is in Header happens at the beginning of every single trial
+Header(
+    // We will use this global Var element later to store the participant's name
+    newVar("ParticipantName")
+        .global()
+    ,
+    // Delay of 250ms before every trial
+    newTimer(250)
+        .start()
+        .wait()
+)
+.log( "Name" , getVar("ParticipantName") )
+// This log command adds a column reporting the participant's name to every line saved to the results
+
+
+newTrial( "intro" ,
+    newImage("pcibex-logo.png")
+        .size( 150 , 200 )      // Resize the image to 150x200px
+        .print()
+    ,
+    newText("<p>bienvenue.</p><p>comment vous appelez vous</p>")
+        .print()
+    ,
+    newTextInput()
+        .print()
+        .wait()                 // The next command won't be executed until Enter is pressed
+        .setVar( "ParticipantName" )
+        // This setVar command stores the value from the TextInput element into the Var element
+)
+
+newTrial( "experiment", 
+
+newText("<p>vous etes dans un restaurant universitaire, et vous devez choisir des aliments<p>")
+    .print()
+,
+newText("qu'est ce qu'on mange a midi?")
+    .print()
+,
+    newText("choisissez une entree un plat et un dessert svp")
+    .print()
+,
+    newText("starter1", "carottes rapees")
+,
+    newText("starter2", "oeuf mimosa")
+,
+    newText("main1", "saucisses frites")
+,
+    newText("main2", "poulet ratatouille")
+,
+    newText("dess1", "yaourt")
+, 
+    newText("dess2", "tarte citron")
+, 
+    newImage("nutA","Nutri-score-A.png")
+    .size(35,19)
+    ,
+newCanvas(450,400)
+    .add( 0 , 20 , getImage("nutA"))
+    .add( 35 , 20 , getText("starter1") )
+    .add( 35 , 50 , getText("starter2") )
+    .add( 200 , 20 , getText("main1") )
+    .add( 200 , 50 , getText("main2") )
+    .add( 350, 20, getText("dess1") )
+    .add( 350, 50, getText("dess2") )
+    .print()
+,
+//    newTimer(500)
+//        .start()
+//        .wait()
+
+newSelector()
+    .add( getText("starter1") , getText("starter2") )
+    .log()
+//    .wait()
+, 
+newSelector()
+    .add( getText("main1") , getText("main2") )
+    .log()
+//    .wait()
+,
+newSelector()
+    .add( getText("dess1") , getText("dess2") )
+    .log()
+//    .wait()
+
+    .log()
+    .wait()
+
+)
+
+
+// Spaces and linebreaks don't matter to the script: we've only been using them for the sake of readability
+newTrial( "A+" ,
+    newText("merci pour votre participation!").print(),
+    newButton().wait()  // Wait for a click on a non-displayed button = wait here forever
+)
+.setOption( "countsForProgressBar" , false )
+// Make sure the progress bar is full upon reaching this last (non-)trial
